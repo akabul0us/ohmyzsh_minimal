@@ -8,10 +8,6 @@ function uninstall_oh_my_zsh() {
   command env ZSH="$ZSH" sh "$ZSH/tools/uninstall.sh"
 }
 
-function upgrade_oh_my_zsh() {
-  echo >&2 "${fg[yellow]}Note: \`$0\` is deprecated. Use \`omz update\` instead.$reset_color"
-  omz update
-}
 
 function open_command() {
   local open_cmd

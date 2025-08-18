@@ -67,8 +67,6 @@ fi
 mkdir -p "$ZSH_CACHE_DIR/completions"
 (( ${fpath[(Ie)$ZSH_CACHE_DIR/completions]} )) || fpath=("$ZSH_CACHE_DIR/completions" $fpath)
 
-# Check for updates on initial load...
-source "$ZSH/tools/check_for_upgrade.sh"
 
 # Initializes Oh My Zsh
 
@@ -210,25 +208,5 @@ for config_file ("$ZSH_CUSTOM"/*.zsh(N)); do
   source "$config_file"
 done
 unset config_file
-
-# Load the theme
-is_theme() {
-  local base_dir=$1
-  local name=$2
-  builtin test -f $base_dir/$name.zsh-theme
-}
-
-if [[ -n "$ZSH_THEME" ]]; then
-  if is_theme "$ZSH_CUSTOM" "$ZSH_THEME"; then
-    source "$ZSH_CUSTOM/$ZSH_THEME.zsh-theme"
-  elif is_theme "$ZSH_CUSTOM/themes" "$ZSH_THEME"; then
-    source "$ZSH_CUSTOM/themes/$ZSH_THEME.zsh-theme"
-  elif is_theme "$ZSH/themes" "$ZSH_THEME"; then
-    source "$ZSH/themes/$ZSH_THEME.zsh-theme"
-  else
-    echo "[oh-my-zsh] theme '$ZSH_THEME' not found"
-  fi
-fi
-
 # set completion colors to be the same as `ls`, after theme has been loaded
 [[ -z "$LS_COLORS" ]] || zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
