@@ -219,7 +219,9 @@ source $ZSH/oh-my-zsh.sh
 
 # Preferred editor for local and remote sessions
 # if [[ -n $SSH_CONNECTION ]]; then
-   export EDITOR='vim'
+if (command -v vim > /dev/null); then
+	export EDITOR='vim'
+fi
 # else
 #   export EDITOR='mvim'
 # fi
@@ -246,6 +248,11 @@ alias tplink="ssh admin@192.168.0.1 -oKexAlgorithms=+diffie-hellman-group1-sha1 
 alias hcdt="hcxdumptool -i wlan1 -F --rds 1 --bpf=~/protect.bpf"
 #this one is for putting COMFAST CF-922AC in the correct mode
 alias mtswitch="usb_modeswitch -K -W -v 0e8d -p 2870"
+alias lowpri="ionice -c 3 chrt --idle 0 nice -n19"
+newdir() {
+    mkdir -p "${1}"
+    cd "${1}"
+}
 
 #make a red prompt if root and a blue prompt if not
 if [ $EUID -eq 0 ]; then
