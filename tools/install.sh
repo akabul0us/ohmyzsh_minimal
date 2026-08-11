@@ -382,9 +382,16 @@ setup_zshrc() {
   fi
   omz=$(echo "$omz" | sed "s|^$HOME/|\$HOME/|")
 
-  sed "s|^export ZSH=.*$|export ZSH=\"${omz}\"|" "$ZSH/templates/zshrc.zsh-template" > "$zdot/.zshrc-omztemp"
+  case "$PREFIX" in
+    *com.termux*) 
+	    templatefile="$ZSH/templates/zshrc.zsh-template-termux"
+	    ;;
+    *) 
+	    templatefile="$ZSH/templates/zshrc.zsh-template"
+	    ;;
+  esac
+  sed "s|^export ZSH=.*$|export ZSH=\"${omz}\"|" "$templatefile" > "$zdot/.zshrc-omztemp"
   mv -f "$zdot/.zshrc-omztemp" "$zdot/.zshrc"
-
   echo
 }
 
